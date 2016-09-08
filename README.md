@@ -28,14 +28,13 @@ or
 });
 ```
 
-## Avoid syntax error
-
-### Declaration execution error 
+## Declaration execution syntax error
 
 ```js
-function () {}()
-// SyntaxError
+function () {}() // SyntaxError
 ```
+
+## Handle syntax error
 
 ### Convert declaration to expression
 
@@ -125,6 +124,7 @@ console.log(a); // 1
 for (let i = 0; i < 5; i++) {
     // ...
 }
+
 console.log(i); // ReferenceError
 ```
 
@@ -132,6 +132,7 @@ console.log(i); // ReferenceError
 if (true) {
     let a = 1;
 }
+
 console.log(a); // ReferenceError
 ```
 
@@ -139,6 +140,7 @@ console.log(a); // ReferenceError
 {
     let a = 1;
 }
+
 console.log(a); // ReferenceError
 ```
 
@@ -329,6 +331,7 @@ var module = (function () {
         get: get
     };
 })();
+```
 
 ### define
 
