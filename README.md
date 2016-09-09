@@ -56,6 +56,8 @@ function () {}() // SyntaxError
 (function () {})();
 ```
 
+**[⬆ back to top](#quick-links)**
+
 # <a id="Scope"></a>Scope
 
 ## Function scope
@@ -181,6 +183,8 @@ foo();
 bar();
 ```
 
+**[⬆ back to top](#quick-links)**
+
 # <a id="Hoisting"></a>Hoisting
 
 ## Variable hoisting
@@ -227,6 +231,7 @@ var foo = function bar() {
 };
 ```
 
+**[⬆ back to top](#quick-links)**
 
 # <a id="Closure"></a>Closure
 
@@ -248,6 +253,8 @@ function foo() {
 var baz = foo();
 baz(); // 1
 ```
+
+**[⬆ back to top](#quick-links)**
 
 # <a id="Modules"></a>Modules
 
@@ -418,3 +425,5 @@ import foo from 'foo';
 
 foo.qux(); // foo, dep
 ```
+
+**[⬆ back to top](#quick-links)**
