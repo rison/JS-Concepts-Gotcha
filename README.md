@@ -1,6 +1,14 @@
 # JS Concepts Gotcha 
 
-# IIFE: Immediately Invoked Function Expression
+## Quick links
+
+1. [IIFE: Immediately Invoked Function Expression](#IIFE)
+1. [Sope](#Scope)
+1. [Hoisting](#Hoisting)
+1. [Closure](#Closure)
+1. [Modules](#Modules)
+
+# <a id="IIFE"></a>IIFE: Immediately Invoked Function Expression
 
 ## Basic
 
@@ -48,7 +56,9 @@ function () {}() // SyntaxError
 (function () {})();
 ```
 
-# Scope
+**[⬆ back to top](#quick-links)**
+
+# <a id="Scope"></a>Scope
 
 ## Function scope
 
@@ -173,7 +183,9 @@ foo();
 bar();
 ```
 
-# Hoisting
+**[⬆ back to top](#quick-links)**
+
+# <a id="Hoisting"></a>Hoisting
 
 ## Variable hoisting
 
@@ -219,8 +231,9 @@ var foo = function bar() {
 };
 ```
 
+**[⬆ back to top](#quick-links)**
 
-# Closure
+# <a id="Closure"></a>Closure
 
 ```js
 function foo() {
@@ -241,7 +254,9 @@ var baz = foo();
 baz(); // 1
 ```
 
-# Modules
+**[⬆ back to top](#quick-links)**
+
+# <a id="Modules"></a>Modules
 
 ## Two requirements
 
@@ -410,3 +425,5 @@ import foo from 'foo';
 
 foo.qux(); // foo, dep
 ```
+
+**[⬆ back to top](#quick-links)**
