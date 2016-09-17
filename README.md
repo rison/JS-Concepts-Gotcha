@@ -11,7 +11,7 @@ JS concepts demonstrated by code, mostly it follows the contents of [You Don't K
 1. [Hoisting](#Hoisting)
 1. [Closure](#Closure)
 1. [Modules](#Modules)
-1. [Determining `this`](#determiningthis)
+1. [Determining `this`](#determining-this)
 
 # <a id="IIFE"></a>IIFE: Immediately Invoked Function Expression
 
@@ -355,7 +355,7 @@ var module = (function () {
 
 ### define
 
-```
+```js
 module.define('dep', [], function () {
     var name = 'dep';
     
@@ -438,7 +438,7 @@ foo.qux(); // foo, dep
 
 ## Default binding
 
-```
+```js
 function foo() {
     console.log(this);
 }
@@ -447,7 +447,7 @@ foo(); // global
 ```
 
 ### Strict mode
-```
+```js
 function foo() {
     "use strict";
 
@@ -457,7 +457,7 @@ function foo() {
 foo(); // undefined
 ```
 
-```
+```js
 function foo() {
     console.log(this);
 }
@@ -471,7 +471,7 @@ function foo() {
 
 ## Implicit binding
 
-```
+```js
 function foo() {
     console.log(this);
 }
@@ -485,7 +485,7 @@ obj.foo(); // obj
 
 ### Implicit binding lost
 
-```
+```js
 function foo() {
     console.log(this);
 }
@@ -499,7 +499,7 @@ var bar = obj.foo;
 bar(); // global
 ```
 
-```
+```js
 function foo() {
     console.log(this);
 }
@@ -519,7 +519,7 @@ setTimeout(function() {
 
 ### `call` and `apply`
 
-```
+```js
 function foo() {
     console.log(this);
 }
@@ -533,7 +533,7 @@ foo.apply(obj); // obj
 
 ### Hard binding: `Function.prototype.bind`
 
-```
+```js
 function foo() {
     console.log(this);
 }
@@ -546,7 +546,7 @@ bar(); // obj
 
 ### API call contexts
 
-```
+```js
 function foo() {
     console.log(this);
 }
@@ -558,7 +558,7 @@ var obj = {};
 
 ## `new` binding
 
-```
+```js
 function foo(a) {
     this.a = a;
 }
@@ -571,7 +571,7 @@ console.log(bar.a); // 1
 
 ### Ignored `this`
 
-```
+```js
 function foo() {
     console.log(this);
 }
@@ -583,7 +583,7 @@ To spread parameters:
 
 #### ES5
 
-```
+```js
 function foo(a, b) {
     console.log(a, b);
 }
@@ -593,7 +593,7 @@ foo.apply(null, [1, 2]); // 1, 2
 
 #### ES6
 
-```
+```js
 function foo(a, b) {
     console.log(a, b);
 }
@@ -603,7 +603,7 @@ foo(...[1, 2])
 
 ### Safer `this` by DMZ: de-militarized zone
 
-```
+```js
 function foo(a, b) {
     console.log(a, b);
 }
@@ -615,7 +615,7 @@ foo.apply(ø, [1, 2]); // 1, 2
 
 ### Indirect references
 
-```
+```js
 function foo() {
     console.log(this);
 }
@@ -628,7 +628,7 @@ obj.foo();            // obj
 
 ## ES6 arrow function `this` binding adopt
 
-```
+```js
 var foo = {
     baz: () => {
         console.log(this);
