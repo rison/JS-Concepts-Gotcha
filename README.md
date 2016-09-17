@@ -1,12 +1,17 @@
-# JS Concepts Gotcha 
+# JS Concepts Gotcha
+
+## About
+
+JS concepts demonstrated by code, mostly it follows the contents of [You Don't Know JS](https://github.com/getify/You-Dont-Know-JS/)
 
 ## Quick links
 
 1. [IIFE: Immediately Invoked Function Expression](#IIFE)
-1. [Sope](#Scope)
+1. [Scope](#Scope)
 1. [Hoisting](#Hoisting)
 1. [Closure](#Closure)
 1. [Modules](#Modules)
+1. [Determining `this`](#determiningthis)
 
 # <a id="IIFE"></a>IIFE: Immediately Invoked Function Expression
 
@@ -424,6 +429,220 @@ export foo;
 import foo from 'foo';
 
 foo.qux(); // foo, dep
+```
+
+**[⬆ back to top](#quick-links)**
+
+
+# Determining `this`
+
+## Default binding
+
+```
+function foo() {
+    console.log(this);
+}
+
+foo(); // global
+```
+
+### Strict mode
+```
+function foo() {
+    "use strict";
+
+    console.log(this);
+}
+
+foo(); // undefined
+```
+
+```
+function foo() {
+    console.log(this);
+}
+
+(function(){
+    "use strict";
+
+    foo(); // global
+})();
+```
+
+## Implicit binding
+
+```
+function foo() {
+    console.log(this);
+}
+
+var obj = {
+    foo: foo
+};
+
+obj.foo(); // obj
+```
+
+### Implicit binding lost
+
+```
+function foo() {
+    console.log(this);
+}
+
+var obj = {
+    foo: foo
+};
+
+var bar = obj.foo;
+
+bar(); // global
+```
+
+```
+function foo() {
+    console.log(this);
+}
+
+var obj = {
+    foo: foo
+};
+
+setTimeout(obj.foo, 100);   // global
+
+setTimeout(function() {
+    obj.foo();              // obj
+}, 200);
+```
+
+## Explicit binding
+
+### `call` and `apply`
+
+```
+function foo() {
+    console.log(this);
+}
+
+var obj = {};
+
+foo();          // global
+foo.call(obj);  // obj
+foo.apply(obj); // obj
+```
+
+### Hard binding: `Function.prototype.bind`
+
+```
+function foo() {
+    console.log(this);
+}
+
+var obj = {};
+var bar = foo.bind(obj);
+
+bar(); // obj
+```
+
+### API call contexts
+
+```
+function foo() {
+    console.log(this);
+}
+
+var obj = {};
+
+[1, 2, 3].forEach(foo, obj); // obj, obj, obj
+```
+
+## `new` binding
+
+```
+function foo(a) {
+    this.a = a;
+}
+
+var bar = new foo(1); 
+console.log(bar.a); // 1
+```
+
+## Binding exceptions
+
+### Ignored `this`
+
+```
+function foo() {
+    console.log(this);
+}
+
+foo.apply(null); // global
+```
+
+To spread parameters:
+
+#### ES5
+
+```
+function foo(a, b) {
+    console.log(a, b);
+}
+
+foo.apply(null, [1, 2]); // 1, 2
+```
+
+#### ES6
+
+```
+function foo(a, b) {
+    console.log(a, b);
+}
+
+foo(...[1, 2])
+```
+
+### Safer `this` by DMZ: de-militarized zone
+
+```
+function foo(a, b) {
+    console.log(a, b);
+}
+
+var ø = Object.create(null);
+
+foo.apply(ø, [1, 2]); // 1, 2
+```
+
+### Indirect references
+
+```
+function foo() {
+    console.log(this);
+}
+
+var obj = {};
+
+(obj.foo = foo)();    // global
+obj.foo();            // obj
+```
+
+## ES6 arrow function `this` binding adopt
+
+```
+var foo = {
+    baz: () => {
+        console.log(this);
+    }
+}
+
+var bar = {
+    baz: function () {
+        console.log(this);
+    }
+}
+
+foo.baz(); // global
+bar.baz(); // bar
 ```
 
 **[⬆ back to top](#quick-links)**
