@@ -646,3 +646,211 @@ bar.baz(); // bar
 ```
 
 **[⬆ back to top](#quick-links)**
+
+# Objects
+
+## Access via property & key
+```js
+var foo = {};
+
+foo.bar = 1;        // property
+foo['baz'] = 1;     // key
+```
+
+## Access via invalid identifier key
+```js
+var foo = {};
+
+foo['b-a-r!'] = 1;  // key (invalid identifier)
+```
+
+## Auto convert key type
+```js
+var foo = {};
+var bar = {};
+
+foo[true] = 1;
+foo[3] = 2;
+foo[bar] = 3;
+
+console.log(foo['true']);               // 1
+console.log(foo['3']);                  // 2
+console.log(foo['[object Object]']);    // 3
+```
+
+## Array
+
+### Add number property
+```js
+var arr = ['foo', 'foo'];
+
+arr['1'] = 'bar';
+
+console.log(arr[1]);     // bar
+console.log(arr['1']);   // bar
+
+## Duplicating Objects
+
+### JSON-safe copy
+```js
+var newObj = JSON.parse(JSON.stringify(someObj));
+```
+
+### ES6 shallow copy: `Object.assign`
+```js
+var anotherObj = {
+    foo: 'bar'
+};
+
+var oldObj = {
+    a: 1,
+    b: anotherObj
+};
+
+var newObj = Object.assign({}, oldObj);
+
+console.log(newObj.a);                       // 1
+console.log(newObj.b === anotherObject);     // true
+```
+
+## Property descriptors
+
+### Writable
+```js
+var obj = {};
+
+Object.defineProperty(obj, 'a', {
+    value: 1,
+    writable: false
+});
+
+obj.a = 2;
+
+console.log(obj.a); // 1 | TypeError in strict mode
+```
+
+### Configurable
+```js
+var obj = {};
+
+Object.defineProperty(obj, 'a', {
+    value: 1,
+    configurable: false
+});
+
+delete obj.a;       // failed silently
+
+console.log(obj.a); // 1
+
+Object.defineProperty(obj, 'a', {
+    value: 2
+}); // TypeError
+```
+
+### Enumerable
+```js
+var obj = {};
+
+Object.defineProperty(obj, 'a',{
+    value: 1,
+    enumerable: false
+});
+
+for (var k in obj) {
+    console.log(k); // a not logged
+}
+```
+
+## Immutability
+
+### Object Constant
+```js
+var obj = {};
+
+Object.defineProperty(obj, "CONST_VARIABLE", {
+    value: 1,
+    writable: false,
+    configurable: false
+});
+
+obj.CONST_VARIABLE = 2;             // TypeError in strict mode
+
+console.log(obj.CONST_VARIABLE);    // 1
+```
+
+### Prevent extensions
+```js
+var obj = {
+    a: 2
+};
+
+Object.preventExtensions(obj);
+
+obj.b = 3;
+console.log(obj.b); // undefined
+```
+
+### Seal
+```js
+var obj = {
+    a: 1
+};
+
+Object.seal(obj);
+
+obj.a = 2;          // can change
+obj.b = 1;          // can't add
+delete(obj.a);      // can't delete
+
+console.log(obj.a); // 2
+console.log(obj.b); // undefined
+```
+
+### Freeze
+```js
+var obj = {
+    a: 1
+};
+
+Object.freeze(obj);
+
+obj.a = 2;          // can't change
+obj.b = 1;          // can't add
+delete(obj.a);      // can't delete
+
+console.log(obj.a); // 1
+console.log(obj.b); // undefined
+```
+
+## Existence
+
+### `in` and `hasOwnProperty`
+```js
+var obj = {
+    a: 1
+};
+
+console.log('a' in obj);                // true
+console.log(obj.hasOwnProperty('a');    // true
+```
+
+### Enumeration
+```js
+var obj = {};
+
+Object.defineProperty(obj, 'a',{
+    value: 1,
+    enumerable: false
+});
+
+console.log(obj.a);                             // 1
+console.log('a' in obj);                        // true
+console.log(obj.hasOwnProperty('a'));           // true
+
+for (var k in obj) {
+    console.log(k); // 'a' not logged
+}
+
+console.log(Object.keys(obj));                  // []
+console.log(Object.getOwnPropertyNames(obj));   // ['a']
+```
